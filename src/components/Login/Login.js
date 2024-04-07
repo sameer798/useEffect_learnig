@@ -9,6 +9,7 @@ const Login = (props) => {
   const [emailIsValid, setEmailIsValid] = useState();
   const [enteredPassword, setEnteredPassword] = useState('');
   const [passwordIsValid, setPasswordIsValid] = useState();
+  const [enteredCollage, setEnteredCollage] = useState('');
   const [formIsValid, setFormIsValid] = useState(false);
 
   const emailChangeHandler = (event) => {
@@ -35,10 +36,16 @@ const Login = (props) => {
     setPasswordIsValid(enteredPassword.trim().length > 6);
   };
 
+  const collageHandler = (e)=>{
+    setEnteredCollage(e.target.value)
+  }
+
   const submitHandler = (event) => {
     event.preventDefault();
-    props.onLogin(enteredEmail, enteredPassword);
+    props.onLogin(enteredEmail, enteredPassword, enteredCollage);
   };
+
+  
 
   return (
     <Card className={classes.login}>
@@ -57,6 +64,22 @@ const Login = (props) => {
             onBlur={validateEmailHandler}
           />
         </div>
+
+        <div
+          className={`${classes.control} ${
+            emailIsValid === false ? classes.invalid : ''
+          }`}
+        >
+          <label htmlFor="collage">collage</label>
+          <input
+            type="text"
+            id="collage"
+            value={enteredCollage}
+            onChange={collageHandler}
+            onBlur={validateEmailHandler}
+          />
+        </div>
+
         <div
           className={`${classes.control} ${
             passwordIsValid === false ? classes.invalid : ''
@@ -70,6 +93,7 @@ const Login = (props) => {
             onChange={passwordChangeHandler}
             onBlur={validatePasswordHandler}
           />
+          
         </div>
         <div className={classes.actions}>
           <Button type="submit" className={classes.btn} disabled={!formIsValid}>
